@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxh.weshare.mapper.TrackerMapper">
+  <resultMap id="BaseResultMap" type="com.yxh.weshare.bean.pojo.Tracker">
+    <id column="ws_tracker_id" jdbcType="INTEGER" property="wsTrackerId" />
+    <result column="ws_user_id" jdbcType="INTEGER" property="wsUserId" />
+    <result column="ws_goods_id" jdbcType="INTEGER" property="wsGoodsId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_tracker_id, ws_user_id, ws_goods_id
+  </sql>
+  <select id="selectByExample" parameterType="com.yxh.weshare.bean.pojo.TrackerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ws_tracker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ws_tracker
+    where ws_tracker_id = #{wsTrackerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ws_tracker
+    where ws_tracker_id = #{wsTrackerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yxh.weshare.bean.pojo.TrackerExample">
+    delete from ws_tracker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yxh.weshare.bean.pojo.Tracker">
+    insert into ws_tracker (ws_tracker_id, ws_user_id, ws_goods_id
+      )
+    values (#{wsTrackerId,jdbcType=INTEGER}, #{wsUserId,jdbcType=INTEGER}, #{wsGoodsId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yxh.weshare.bean.pojo.Tracker">
+    insert into ws_tracker
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsTrackerId != null">
+        ws_tracker_id,
+      </if>
+      <if test="wsUserId != null">
+        ws_user_id,
+      </if>
+      <if test="wsGoodsId != null">
+        ws_goods_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsTrackerId != null">
+        #{wsTrackerId,jdbcType=INTEGER},
+      </if>
+      <if test="wsUserId != null">
+        #{wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="wsGoodsId != null">
+        #{wsGoodsId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yxh.weshare.bean.pojo.TrackerExample" resultType="java.lang.Long">
+    select count(*) from ws_tracker
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ws_tracker
+    <set>
+      <if test="record.wsTrackerId != null">
+        ws_tracker_id = #{record.wsTrackerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsUserId != null">
+        ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsGoodsId != null">
+        ws_goods_id = #{record.wsGoodsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ws_tracker
+    set ws_tracker_id = #{record.wsTrackerId,jdbcType=INTEGER},
+      ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      ws_goods_id = #{record.wsGoodsId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yxh.weshare.bean.pojo.Tracker">
+    update ws_tracker
+    <set>
+      <if test="wsUserId != null">
+        ws_user_id = #{wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="wsGoodsId != null">
+        ws_goods_id = #{wsGoodsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ws_tracker_id = #{wsTrackerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.Tracker">
+    update ws_tracker
+    set ws_user_id = #{wsUserId,jdbcType=INTEGER},
+      ws_goods_id = #{wsGoodsId,jdbcType=INTEGER}
+    where ws_tracker_id = #{wsTrackerId,jdbcType=INTEGER}
+  </update>
+</mapper>

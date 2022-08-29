@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxh.weshare.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.yxh.weshare.bean.pojo.Category">
+    <id column="ws_category_id" jdbcType="INTEGER" property="wsCategoryId" />
+    <result column="ws_category_name" jdbcType="VARCHAR" property="wsCategoryName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_category_id, ws_category_name
+  </sql>
+  <select id="selectByExample" parameterType="com.yxh.weshare.bean.pojo.CategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ws_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ws_category
+    where ws_category_id = #{wsCategoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ws_category
+    where ws_category_id = #{wsCategoryId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yxh.weshare.bean.pojo.CategoryExample">
+    delete from ws_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yxh.weshare.bean.pojo.Category">
+    insert into ws_category (ws_category_id, ws_category_name)
+    values (#{wsCategoryId,jdbcType=INTEGER}, #{wsCategoryName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yxh.weshare.bean.pojo.Category">
+    insert into ws_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsCategoryId != null">
+        ws_category_id,
+      </if>
+      <if test="wsCategoryName != null">
+        ws_category_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsCategoryId != null">
+        #{wsCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="wsCategoryName != null">
+        #{wsCategoryName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yxh.weshare.bean.pojo.CategoryExample" resultType="java.lang.Long">
+    select count(*) from ws_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ws_category
+    <set>
+      <if test="record.wsCategoryId != null">
+        ws_category_id = #{record.wsCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsCategoryName != null">
+        ws_category_name = #{record.wsCategoryName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ws_category
+    set ws_category_id = #{record.wsCategoryId,jdbcType=INTEGER},
+      ws_category_name = #{record.wsCategoryName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yxh.weshare.bean.pojo.Category">
+    update ws_category
+    <set>
+      <if test="wsCategoryName != null">
+        ws_category_name = #{wsCategoryName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ws_category_id = #{wsCategoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.Category">
+    update ws_category
+    set ws_category_name = #{wsCategoryName,jdbcType=VARCHAR}
+    where ws_category_id = #{wsCategoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

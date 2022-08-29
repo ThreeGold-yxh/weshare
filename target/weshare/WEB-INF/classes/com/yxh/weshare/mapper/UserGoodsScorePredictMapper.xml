@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxh.weshare.mapper.UserGoodsScorePredictMapper">
+  <resultMap id="BaseResultMap" type="com.yxh.weshare.bean.pojo.UserGoodsScorePredict">
+    <id column="ws_user_id" jdbcType="INTEGER" property="wsUserId" />
+    <id column="ws_goods_id" jdbcType="INTEGER" property="wsGoodsId" />
+    <result column="ws_score_predict" jdbcType="DOUBLE" property="wsScorePredict" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_user_id, ws_goods_id, ws_score_predict
+  </sql>
+  <select id="selectByExample" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredictExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_goods_score_predict
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredictKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_goods_score_predict
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+      and ws_goods_id = #{wsGoodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredictKey">
+    delete from user_goods_score_predict
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+      and ws_goods_id = #{wsGoodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredictExample">
+    delete from user_goods_score_predict
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredict">
+    insert into user_goods_score_predict (ws_user_id, ws_goods_id, ws_score_predict
+      )
+    values (#{wsUserId,jdbcType=INTEGER}, #{wsGoodsId,jdbcType=INTEGER}, #{wsScorePredict,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredict">
+    insert into user_goods_score_predict
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        ws_user_id,
+      </if>
+      <if test="wsGoodsId != null">
+        ws_goods_id,
+      </if>
+      <if test="wsScorePredict != null">
+        ws_score_predict,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        #{wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="wsGoodsId != null">
+        #{wsGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="wsScorePredict != null">
+        #{wsScorePredict,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredictExample" resultType="java.lang.Long">
+    select count(*) from user_goods_score_predict
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_goods_score_predict
+    <set>
+      <if test="record.wsUserId != null">
+        ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsGoodsId != null">
+        ws_goods_id = #{record.wsGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsScorePredict != null">
+        ws_score_predict = #{record.wsScorePredict,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_goods_score_predict
+    set ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      ws_goods_id = #{record.wsGoodsId,jdbcType=INTEGER},
+      ws_score_predict = #{record.wsScorePredict,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredict">
+    update user_goods_score_predict
+    <set>
+      <if test="wsScorePredict != null">
+        ws_score_predict = #{wsScorePredict,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+      and ws_goods_id = #{wsGoodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.UserGoodsScorePredict">
+    update user_goods_score_predict
+    set ws_score_predict = #{wsScorePredict,jdbcType=DOUBLE}
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+      and ws_goods_id = #{wsGoodsId,jdbcType=INTEGER}
+  </update>
+</mapper>

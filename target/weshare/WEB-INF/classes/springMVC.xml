@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--启动注解识别，配置映射器与适配器-->
+    <mvc:annotation-driven/>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+
+        <!--配置多个拦截器-->
+        <!--第一个拦截器 - URL拦截器，在每次访问一个controller前，将其url记录到session中。方便回退-->
+        <!--注意不允许拦截登录，因为我们的LoginInterceptor拦截器会重定向到登录，如果登录也被拦截-->
+        <!--那么原来的url就被重定向时登录的url给冲掉了-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/fore/page/login"/>
+            <mvc:exclude-mapping path="/fore/page/register"/>
+            <mvc:exclude-mapping path="/fore/user/register"/>
+            <mvc:exclude-mapping path="/fore/user/login"/>
+            <!--也不准拦截静态资源-->
+            <mvc:exclude-mapping path="/static/img/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <!--edit-filter-->
+            <mvc:exclude-mapping path="/fore/home/edit-filter"/>
+            <bean class="com.yxh.weshare.interceptor.UrlInterceptor"/>
+        </mvc:interceptor>
+        <!--登录拦截器-->
+        <mvc:interceptor>
+            <!--<mvc:mapping path="/fore*"/>-->
+            <mvc:mapping path="/fore/**"/>
+            <bean class="com.yxh.weshare.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+        <!--管理员拦截器-->
+        <mvc:interceptor>
+            <!--<mvc:mapping path="/fore*"/>-->
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.yxh.weshare.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+        <!--seller拦截器-->
+        <mvc:interceptor>
+            <!--<mvc:mapping path="/fore*"/>-->
+            <mvc:mapping path="/fore/page/add/goods"/>
+            <bean class="com.yxh.weshare.interceptor.SellerInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器  -->
+    <context:component-scan base-package="com.yxh.weshare.controller">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--扫描aop需要用的aspect包，注册成组件-->
+    <context:component-scan base-package="com.yxh.weshare.aspect"/>
+
+    <!--启动AspectJ支持, 开启aop功能，注意，只对前面扫描到的包起作用-->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <!--< context:annotation-config> 是用于激活那些已经在spring容器里注册过的bean上面的注解，也就是显示的向Spring注册-->
+    <context:annotation-config/>
+
+    <!--开通静态资源的访问-->
+    <mvc:default-servlet-handler />
+
+    <!--映射的是本地D:/upload下的文件。假设有一张图片路径是D:\upload\20210324\1.jpg，
+    那么在浏览器通过可以http://localhost:8080/upload/20210324/1.jpg查看到图片。-->
+
+    <!--<mvc:resources mapping="/static/**" location="/static/"/>-->
+
+
+
+    <!-- 视图定位 -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView" />
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!--上传文件的配置-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5000000" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+
+
+</beans>

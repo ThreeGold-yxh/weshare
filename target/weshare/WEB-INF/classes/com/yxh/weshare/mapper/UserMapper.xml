@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxh.weshare.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.yxh.weshare.bean.pojo.User">
+    <id column="ws_user_id" jdbcType="INTEGER" property="wsUserId" />
+    <result column="ws_user_nickname" jdbcType="VARCHAR" property="wsUserNickname" />
+    <result column="ws_user_account" jdbcType="VARCHAR" property="wsUserAccount" />
+    <result column="ws_user_password" jdbcType="VARCHAR" property="wsUserPassword" />
+    <result column="ws_user_email" jdbcType="VARCHAR" property="wsUserEmail" />
+    <result column="ws_user_address" jdbcType="VARCHAR" property="wsUserAddress" />
+    <result column="ws_user_credit" jdbcType="INTEGER" property="wsUserCredit" />
+    <result column="authority" jdbcType="INTEGER" property="authority" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_user_id, ws_user_nickname, ws_user_account, ws_user_password, ws_user_email, ws_user_address, 
+    ws_user_credit, authority
+  </sql>
+  <select id="selectByExample" parameterType="com.yxh.weshare.bean.pojo.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ws_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ws_user
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ws_user
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yxh.weshare.bean.pojo.UserExample">
+    delete from ws_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yxh.weshare.bean.pojo.User">
+    insert into ws_user (ws_user_id, ws_user_nickname, ws_user_account, 
+      ws_user_password, ws_user_email, ws_user_address, 
+      ws_user_credit, authority)
+    values (#{wsUserId,jdbcType=INTEGER}, #{wsUserNickname,jdbcType=VARCHAR}, #{wsUserAccount,jdbcType=VARCHAR}, 
+      #{wsUserPassword,jdbcType=VARCHAR}, #{wsUserEmail,jdbcType=VARCHAR}, #{wsUserAddress,jdbcType=VARCHAR}, 
+      #{wsUserCredit,jdbcType=INTEGER}, #{authority,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yxh.weshare.bean.pojo.User">
+    insert into ws_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        ws_user_id,
+      </if>
+      <if test="wsUserNickname != null">
+        ws_user_nickname,
+      </if>
+      <if test="wsUserAccount != null">
+        ws_user_account,
+      </if>
+      <if test="wsUserPassword != null">
+        ws_user_password,
+      </if>
+      <if test="wsUserEmail != null">
+        ws_user_email,
+      </if>
+      <if test="wsUserAddress != null">
+        ws_user_address,
+      </if>
+      <if test="wsUserCredit != null">
+        ws_user_credit,
+      </if>
+      <if test="authority != null">
+        authority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        #{wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="wsUserNickname != null">
+        #{wsUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserAccount != null">
+        #{wsUserAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserPassword != null">
+        #{wsUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserEmail != null">
+        #{wsUserEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserAddress != null">
+        #{wsUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserCredit != null">
+        #{wsUserCredit,jdbcType=INTEGER},
+      </if>
+      <if test="authority != null">
+        #{authority,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yxh.weshare.bean.pojo.UserExample" resultType="java.lang.Long">
+    select count(*) from ws_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ws_user
+    <set>
+      <if test="record.wsUserId != null">
+        ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wsUserNickname != null">
+        ws_user_nickname = #{record.wsUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUserAccount != null">
+        ws_user_account = #{record.wsUserAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUserPassword != null">
+        ws_user_password = #{record.wsUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUserEmail != null">
+        ws_user_email = #{record.wsUserEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUserAddress != null">
+        ws_user_address = #{record.wsUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUserCredit != null">
+        ws_user_credit = #{record.wsUserCredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.authority != null">
+        authority = #{record.authority,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ws_user
+    set ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      ws_user_nickname = #{record.wsUserNickname,jdbcType=VARCHAR},
+      ws_user_account = #{record.wsUserAccount,jdbcType=VARCHAR},
+      ws_user_password = #{record.wsUserPassword,jdbcType=VARCHAR},
+      ws_user_email = #{record.wsUserEmail,jdbcType=VARCHAR},
+      ws_user_address = #{record.wsUserAddress,jdbcType=VARCHAR},
+      ws_user_credit = #{record.wsUserCredit,jdbcType=INTEGER},
+      authority = #{record.authority,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yxh.weshare.bean.pojo.User">
+    update ws_user
+    <set>
+      <if test="wsUserNickname != null">
+        ws_user_nickname = #{wsUserNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserAccount != null">
+        ws_user_account = #{wsUserAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserPassword != null">
+        ws_user_password = #{wsUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserEmail != null">
+        ws_user_email = #{wsUserEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserAddress != null">
+        ws_user_address = #{wsUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUserCredit != null">
+        ws_user_credit = #{wsUserCredit,jdbcType=INTEGER},
+      </if>
+      <if test="authority != null">
+        authority = #{authority,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.User">
+    update ws_user
+    set ws_user_nickname = #{wsUserNickname,jdbcType=VARCHAR},
+      ws_user_account = #{wsUserAccount,jdbcType=VARCHAR},
+      ws_user_password = #{wsUserPassword,jdbcType=VARCHAR},
+      ws_user_email = #{wsUserEmail,jdbcType=VARCHAR},
+      ws_user_address = #{wsUserAddress,jdbcType=VARCHAR},
+      ws_user_credit = #{wsUserCredit,jdbcType=INTEGER},
+      authority = #{authority,jdbcType=INTEGER}
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </update>
+</mapper>

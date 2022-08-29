@@ -1,0 +1,26 @@
+
+.goodsAddForm{
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+}
+
+.productRowControl{
+    margin-bottom: 4px;
+}
+
+.preview_box{
+    width: 200px;
+}
+
+.submit-button{
+    margin-bottom: 5%;
+}
+
+
+#goods_add_img{
+    width: 100%;
+    /*height: 200px;*/
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

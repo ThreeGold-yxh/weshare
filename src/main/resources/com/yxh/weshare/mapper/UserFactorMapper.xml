@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxh.weshare.mapper.UserFactorMapper">
+  <resultMap id="BaseResultMap" type="com.yxh.weshare.bean.pojo.UserFactor">
+    <id column="ws_user_id" jdbcType="INTEGER" property="wsUserId" />
+    <result column="factor1" jdbcType="DOUBLE" property="factor1" />
+    <result column="factor2" jdbcType="DOUBLE" property="factor2" />
+    <result column="factor3" jdbcType="DOUBLE" property="factor3" />
+    <result column="factor4" jdbcType="DOUBLE" property="factor4" />
+    <result column="factor5" jdbcType="DOUBLE" property="factor5" />
+    <result column="factor6" jdbcType="DOUBLE" property="factor6" />
+    <result column="factor7" jdbcType="DOUBLE" property="factor7" />
+    <result column="factor8" jdbcType="DOUBLE" property="factor8" />
+    <result column="factor9" jdbcType="DOUBLE" property="factor9" />
+    <result column="factor10" jdbcType="DOUBLE" property="factor10" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ws_user_id, factor1, factor2, factor3, factor4, factor5, factor6, factor7, factor8, 
+    factor9, factor10
+  </sql>
+  <select id="selectByExample" parameterType="com.yxh.weshare.bean.pojo.UserFactorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_factor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_factor
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_factor
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yxh.weshare.bean.pojo.UserFactorExample">
+    delete from user_factor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yxh.weshare.bean.pojo.UserFactor">
+    insert into user_factor (ws_user_id, factor1, factor2, 
+      factor3, factor4, factor5, 
+      factor6, factor7, factor8, 
+      factor9, factor10)
+    values (#{wsUserId,jdbcType=INTEGER}, #{factor1,jdbcType=DOUBLE}, #{factor2,jdbcType=DOUBLE}, 
+      #{factor3,jdbcType=DOUBLE}, #{factor4,jdbcType=DOUBLE}, #{factor5,jdbcType=DOUBLE}, 
+      #{factor6,jdbcType=DOUBLE}, #{factor7,jdbcType=DOUBLE}, #{factor8,jdbcType=DOUBLE}, 
+      #{factor9,jdbcType=DOUBLE}, #{factor10,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yxh.weshare.bean.pojo.UserFactor">
+    insert into user_factor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        ws_user_id,
+      </if>
+      <if test="factor1 != null">
+        factor1,
+      </if>
+      <if test="factor2 != null">
+        factor2,
+      </if>
+      <if test="factor3 != null">
+        factor3,
+      </if>
+      <if test="factor4 != null">
+        factor4,
+      </if>
+      <if test="factor5 != null">
+        factor5,
+      </if>
+      <if test="factor6 != null">
+        factor6,
+      </if>
+      <if test="factor7 != null">
+        factor7,
+      </if>
+      <if test="factor8 != null">
+        factor8,
+      </if>
+      <if test="factor9 != null">
+        factor9,
+      </if>
+      <if test="factor10 != null">
+        factor10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsUserId != null">
+        #{wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="factor1 != null">
+        #{factor1,jdbcType=DOUBLE},
+      </if>
+      <if test="factor2 != null">
+        #{factor2,jdbcType=DOUBLE},
+      </if>
+      <if test="factor3 != null">
+        #{factor3,jdbcType=DOUBLE},
+      </if>
+      <if test="factor4 != null">
+        #{factor4,jdbcType=DOUBLE},
+      </if>
+      <if test="factor5 != null">
+        #{factor5,jdbcType=DOUBLE},
+      </if>
+      <if test="factor6 != null">
+        #{factor6,jdbcType=DOUBLE},
+      </if>
+      <if test="factor7 != null">
+        #{factor7,jdbcType=DOUBLE},
+      </if>
+      <if test="factor8 != null">
+        #{factor8,jdbcType=DOUBLE},
+      </if>
+      <if test="factor9 != null">
+        #{factor9,jdbcType=DOUBLE},
+      </if>
+      <if test="factor10 != null">
+        #{factor10,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yxh.weshare.bean.pojo.UserFactorExample" resultType="java.lang.Long">
+    select count(*) from user_factor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_factor
+    <set>
+      <if test="record.wsUserId != null">
+        ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.factor1 != null">
+        factor1 = #{record.factor1,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor2 != null">
+        factor2 = #{record.factor2,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor3 != null">
+        factor3 = #{record.factor3,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor4 != null">
+        factor4 = #{record.factor4,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor5 != null">
+        factor5 = #{record.factor5,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor6 != null">
+        factor6 = #{record.factor6,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor7 != null">
+        factor7 = #{record.factor7,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor8 != null">
+        factor8 = #{record.factor8,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor9 != null">
+        factor9 = #{record.factor9,jdbcType=DOUBLE},
+      </if>
+      <if test="record.factor10 != null">
+        factor10 = #{record.factor10,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_factor
+    set ws_user_id = #{record.wsUserId,jdbcType=INTEGER},
+      factor1 = #{record.factor1,jdbcType=DOUBLE},
+      factor2 = #{record.factor2,jdbcType=DOUBLE},
+      factor3 = #{record.factor3,jdbcType=DOUBLE},
+      factor4 = #{record.factor4,jdbcType=DOUBLE},
+      factor5 = #{record.factor5,jdbcType=DOUBLE},
+      factor6 = #{record.factor6,jdbcType=DOUBLE},
+      factor7 = #{record.factor7,jdbcType=DOUBLE},
+      factor8 = #{record.factor8,jdbcType=DOUBLE},
+      factor9 = #{record.factor9,jdbcType=DOUBLE},
+      factor10 = #{record.factor10,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yxh.weshare.bean.pojo.UserFactor">
+    update user_factor
+    <set>
+      <if test="factor1 != null">
+        factor1 = #{factor1,jdbcType=DOUBLE},
+      </if>
+      <if test="factor2 != null">
+        factor2 = #{factor2,jdbcType=DOUBLE},
+      </if>
+      <if test="factor3 != null">
+        factor3 = #{factor3,jdbcType=DOUBLE},
+      </if>
+      <if test="factor4 != null">
+        factor4 = #{factor4,jdbcType=DOUBLE},
+      </if>
+      <if test="factor5 != null">
+        factor5 = #{factor5,jdbcType=DOUBLE},
+      </if>
+      <if test="factor6 != null">
+        factor6 = #{factor6,jdbcType=DOUBLE},
+      </if>
+      <if test="factor7 != null">
+        factor7 = #{factor7,jdbcType=DOUBLE},
+      </if>
+      <if test="factor8 != null">
+        factor8 = #{factor8,jdbcType=DOUBLE},
+      </if>
+      <if test="factor9 != null">
+        factor9 = #{factor9,jdbcType=DOUBLE},
+      </if>
+      <if test="factor10 != null">
+        factor10 = #{factor10,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yxh.weshare.bean.pojo.UserFactor">
+    update user_factor
+    set factor1 = #{factor1,jdbcType=DOUBLE},
+      factor2 = #{factor2,jdbcType=DOUBLE},
+      factor3 = #{factor3,jdbcType=DOUBLE},
+      factor4 = #{factor4,jdbcType=DOUBLE},
+      factor5 = #{factor5,jdbcType=DOUBLE},
+      factor6 = #{factor6,jdbcType=DOUBLE},
+      factor7 = #{factor7,jdbcType=DOUBLE},
+      factor8 = #{factor8,jdbcType=DOUBLE},
+      factor9 = #{factor9,jdbcType=DOUBLE},
+      factor10 = #{factor10,jdbcType=DOUBLE}
+    where ws_user_id = #{wsUserId,jdbcType=INTEGER}
+  </update>
+</mapper>
